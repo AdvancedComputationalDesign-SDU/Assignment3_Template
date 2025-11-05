@@ -4,31 +4,33 @@
 
 ## Objective
 
-In this assignment, you will explore the creation of complex architectural structures using parametric design principles, building upon your knowledge of recursion, loops, and geometric transformations. Your task is to create a Python script that generates a parametric structural canopy within **Grasshopper** using the **GhPython** component.
-
-Your script should:
-
-- Implement functions that manipulate a base surface to create depth variations using mathematical functions.
-- Generate vertical supports using recursive geometry to mimic branching structural elements.
-- Combine different strategies for surface tessellation to achieve non-uniform patterns.
-- Allow customization of parameters such as angles, length scaling factors, recursion depth, and tessellation strategies.
-- Produce at least **three distinctly different outputs** for each of the following categories by varying parameters or methods:
-  - (a) **Base Surface Shape**
-  - (b) **Surface Tessellation Pattern**
-  - (c) **Vertical Supports**
+In this assignment you will design and generate a **parametric structural canopy** in **Grasshopper** using the **GhPython (Python 3)** component. You will combine: (1) a **NumPy-driven heightmap** that modulates a NURBS surface, (2) **tessellation** of the resulting surface, and (3) **recursive, branching vertical supports** with controlled randomness. Your goal is to produce a small **family of design solutions** by varying parameters and algorithms, then communicate your process and results in a clear, reproducible report. You are asked to present **three** visually distinct designs. Each design must vary at least **two** of the implemented computational logic (heightmap-based surface geometry, tessellation strategy, branching supports).
 
 ---
 
 ## Table of Contents
 
+- [Learning Goals](#learning-goals)
 - [Tasks](#tasks)
-- [Getting Started](#getting-started)
 - [Repository Structure](#repository-structure)
 - [Instructions](#instructions)
+- [Integration Challenges](#integration-challenges)
 - [Submission Guidelines](#submission-guidelines)
 - [Evaluation Criteria](#evaluation-criteria)
 - [Resources](#resources)
+- [Academic Integrity and AI Tool Use](#academic-integrity-and-ai-tool-use)
 - [Contact](#contact)
+
+---
+
+## Learning Goals
+
+- Practice **parametric modeling** in Grasshopper with **GhPython**.
+- Implement **heightmap generation** in pixel/array space using **continuous mathematical functions** with **NumPy**, and use this 2D array to modulate a NURBS surface.
+- Develop a **tessellation strategy** (such as quadrilateral, triangular, diagrid, etc.).
+- Build **recursive branching** supports with controllable parameters and **seeded randomness**.
+- Use **rhinoscriptsyntax** and/or **Rhino.Geometry (RhinoCommon)** to construct, query, and validate geometry.
+- Explore **parameterization, reproducibility**, and clear communication of methods and results.
 
 ---
 
@@ -36,73 +38,53 @@ Your script should:
 
 1. **Implement Parametric Canopy Script**
 
-   - Create a Python script (`parametric_canopy.py`) that generates a parametric structural canopy using Grasshopper's Python component.
-   - Use **Rhino.Geometry** and **RhinoScriptSyntax** to manipulate geometric objects within Rhino.
-   - Define the parameters of your canopy explicitly in your script:
-     - **Base Surface**: The initial surface for the canopy.
-     - **Depth Map Control**: Parameters controlling the depth variation of the canopy.
-     - **Recursion Parameters**: Parameters controlling the recursive generation of supports.
-     - **Tessellation Strategy**: The method used for surface tessellation.
-     - **Support Points**: Points where vertical supports will be generated.
+   - Create/complete a Python script (`parametric_canopy.py`) for use inside GhPython to generate a structural canopy.
+   - Use **rhinoscriptsyntax** (and optionally **Rhino.Geometry** or other more extensive APIs) to construct geometry. For any external libraries you might need (such as NumPy), at the **top of your script**, add:
+     ```python
+     #r: numpy
+     import numpy as np
+     ```
+   - Define the parameters of your canopy **explicitly** as Grasshopper inputs. Some of such parameters include but should be adjusted based on your **own** implementation:
+     - **Heightmap Parameters**: `amplitude`, `frequency`, `phase`, etc.
+     - **Recursion Parameters**: recursion base case, `angle`, `length`, `length_reduction`, `branches`, `angle_variation`, etc.
+     - **Tessellation Parameters**: `divU`, `divV`, etc.
    - Allow customization of these parameters to enable exploration of different designs.
-   - **Optional:** Incorporate randomness to achieve greater visual complexity.
 
 2. **Generate Distinct Outputs**
 
-   - Use your script to produce at least **three distinctly different outputs** for each category by varying parameters or methods:
-     - (a) **Base Surface Shape**
-     - (b) **Surface Tessellation Pattern**
-     - (c) **Vertical Supports**
-   - Save each output as an image in the `images/` folder with descriptive filenames.
+   - Produce **three** visually distinct canopy designs. Each design must vary at least **two** of:
+     - (a) **Heightmap**-based surface geometry
+     - (b) **Tessellation** strategy
+     - (c) **Supports** (recursive branching)
 
 3. **Visualization**
-
-   - Use Grasshopper's visualization tools to display your canopy designs.
-   - Enhance your visualizations with custom color schemes, materials, or other visual effects.
-   - Ensure that your visualizations effectively communicate the design intent and variations.
-
+   - Use clear preview styles and/or custom display pipelines. Map thickness/color to signals (depth, curvature, recursion level).
+   - Export clean images (axes/UI off) suitable for documentation.
 4. **Explore Advanced Concepts**
 
-   - **Extend to Complex Tessellations**:
-     - Experiment with advanced tessellation methods like Voronoi diagrams or Delaunay triangulation.
-     - Handle non-planar tessellation challenges.
-   - **Modify Geometric Rules**:
-     - Incorporate randomness or use different geometric transformations.
-     - Explore biomimicry by mimicking natural forms in your supports or canopy.
+   - **Extend Tessellations**: explore more advanced tessellation strategies such as voronoi, tangent-plane-intersection (TPI), and/or mixed strategies.
+   - **Modify Geometric Rules**: introduce randomness, attractors/repulsors, user input, etc.
 
 5. **Documentation**
 
-   - Write detailed pseudo-code explaining your functions in `DOCUMENTATION.md`.
-   - Provide technical explanations of your algorithms and design decisions.
-   - Include a short report discussing the process and the mathematical principles behind your canopy designs.
-   - Insert images of your generated canopies into the documentation.
+   - Present a detailed write-up of your project in `README.md` using a similar structure to the template provided in `TEMPLATE.md`.
+   - Include pseudo-code, technical explanations, parameter tables (with any random seeds), and images of your results.
+   - Discuss challenges faced and how you addressed them.
 
-## Getting Started
 
-### Prerequisites
-
-- **Rhinoceros 3D** with **Grasshopper** plugin
-- **Python scripting in Grasshopper** (GhPython component)
-- Familiarity with **Rhino.Geometry** and **RhinoScriptSyntax** modules
-- **Python 3.x** (if using Rhino 8's Python 3 support)
-
-### Software Installation
-
-- Ensure that you have Rhino 8 installed, which includes Grasshopper.
-- Install any additional plugins or libraries if required.
+---
 
 ## Repository Structure
 
 ```
 Assignment3/
-├── README.md               # Assignment handout (this file)
-├── DOCUMENTATION.md        # Documentation with pseudo-code and explanations
-├── parametric_canopy.py    # Python script for parametric canopy generation
-├── parametric_canopy.gh    # Grasshopper definition file
-├── images/
-│   └── (Output Images)
-└── src/
-    └── (Additional scripts or components)
+├── README.md               # Final writeup (your write-up + images)
+├── TEMPLATE.md             # Minimal writeup structure for the report
+├── BRIEF.md                # Assignment handout (this file)
+├── parametric_canopy.py    # GhPython script
+├── parametric_canopy.gh    # Grasshopper definition
+└── images/
+    └── (Output images)
 ```
 
 ---
@@ -110,138 +92,105 @@ Assignment3/
 ## Instructions
 
 1. **Clone the Repository**
-
-   - Accept the assignment on GitHub Classroom and clone the repository to your local machine using GitHub Desktop or the command line.
+   - Accept the assignment on GitHub Classroom and clone the repository to your local machine.
 
 2. **Set Up Your Environment**
+   - Open Rhino → Grasshopper, place a **GhPython** component, and copy the logic from `parametric_canopy.py`.
+   - Configure inputs and outputs for the GhPython component with appropriate variable names and type hinting.
 
-   - Open Rhino and launch Grasshopper.
-   - Familiarize yourself with the `parametric_canopy.py` script and the repository structure.
-
-3. **Implement the Parametric Canopy Script**
-
-   - Open the GhPython component in Grasshopper.
-   - Copy the template code from `parametric_canopy.py` into the GhPython editor.
-   - **Define the Parameters** explicitly in your script:
-     - **Base Surface**: Use planes, curves, or surfaces as starting points.
-     - **Depth Map Control**: Implement mathematical functions (e.g., sine, cosine) to manipulate the surface.
-     - **Recursion Parameters**: Control the branching patterns of supports (e.g., angle, length reduction, depth).
-     - **Tessellation Strategy**: Choose between quadrilateral grids, triangular meshes, Voronoi patterns, etc.
-     - **Support Points**: Define where the supports connect to the canopy.
-   - **Implement the Functions**:
-     - Write a function to generate the depth map on the base surface.
-     - Write a function to tessellate the modified surface based on the chosen strategy.
-     - Write a recursive function to generate the vertical supports.
-   - **Visualization within Grasshopper**:
-     - Use Grasshopper components to visualize your geometry.
-     - Ensure that the outputs are properly connected and displayed.
+3. **Implement the Canopy**
+   - **Implement the Heightmap with NumPy in GhPython**. Build `H(U,V)` using continuous functions and evaluate it vectorially over a UV grid. Sample with the surface’s domains and offset along normals.
+   - **Tessellate** the modified surface into a mesh using at least two strategies (quad and triangular). Voronoi/diagrid optional.
+   - Implement **Recursive Supports** that branch with parameters (angles, length reductions, depth, branches). Return line/curve geometry for preview.
 
 4. **Customize Parameters**
+   - Drive parameters via Grasshopper sliders and value lists. Provide a few **preset parameter sets** in comments and/or as named groups in the GH file.
 
-   - Allow users to customize parameters through Grasshopper sliders or input fields.
-   - Provide examples of different parameter sets in your script or as preset configurations.
-   - Encourage exploration by making it easy to adjust parameters.
+5. **Generate & Save Outputs**
+   - Produce at least **three** distinct variations with varied implementations in at least 2 of the manipulation logic (base surface, tessellation, supports).
+   - Export images to `images/` with descriptive names (e.g., `canopy_baseA_quad.png`). Record the parameter sets (and random seeds if used) in your README.
 
-5. **Generate and Save Outputs**
+6. **Document**
+   - Write your report in **`README.md`** with pseudo-code, parameter tables, discussion of methods, and the resulting images.
 
-   - Run your script with different parameter sets to generate at least three distinct variations for each category.
-   - Save each output image in the `images/` folder with descriptive filenames (e.g., `canopy_variation1.png`).
-   - Arrange the images in a grid format for easy comparison.
+7. **Version Control**
+   - Make regular commits with meaningful messages and push to your repository.
 
-6. **Explore Advanced Concepts (Optional for Extra Points)**
+8. **Review & Finalize**
+   - Ensure code runs without errors, is readable, and clearly parameterized.
 
-   - **Implement Advanced Tessellation**:
-     - Use Grasshopper plugins or scripts to generate Voronoi or Delaunay tessellations.
-   - **Incorporate Randomness**:
-     - Introduce randomness in angles, lengths, or tessellation patterns to create more organic designs.
-   - **Extend to Complex Forms**:
-     - Experiment with double-curved surfaces or free-form geometries.
+---
 
-7. **Documentation**
+## Integration Challenges
 
-   - Write detailed pseudo-code explaining your functions in `DOCUMENTATION.md`.
-   - Provide technical explanations of your algorithms and design decisions.
-   - Include images and explanations of each of your design variations.
-   - Discuss any challenges faced and how you overcame them.
+Focus on these specific integration issues and address them in your report.
 
-8. **Version Control with Git**
+- **Heightmap → Surface Mapping & Scaling**  
+  Map pixel indices `(i, j)` to surface parameters `(u, v)` and sample points/normals in surface space.  
+  *Use:* `rs.SurfaceDomain`, `rs.EvaluateSurface`, `rs.SurfaceClosestPoint`, `rs.SurfaceNormal`, `rs.SurfaceFrame`.  
 
-   - Make regular commits with meaningful messages.
-   - Push your commits to the GitHub repository.
+- **Branch–Surface Intersections & Graceful Attachment**  
+  Ensure branch endpoints intersect or snap to the tessellated canopy; align the final segment with the generated surface; avoid gaps.  
+  *Hints*: `rs.CurveSurfaceIntersection`, `rs.CurveBrepIntersect`, `rs.CurveMeshIntersection`, `rs.ProjectPointToMesh`, `rs.ProjectCurveToMesh`, `rs.CurveEndPoint`, `rs.CurveClosestPoint`.
 
-9. **Review and Finalize**
-
-   - Ensure your code is well-commented and organized.
-   - Verify that all generated images are saved correctly.
-   - Double-check your documentation for clarity and completeness.
+- **Geometry Thickness (Optional)**  
+  Give physical thickness to panels and supports.  
+  *Hints*: supports → `rs.AddPipe` (vary radii by depth/curvature); NURBS canopies → `rs.OffsetSurface`; meshes → use RhinoCommon mesh offset/duplication with normal displacements, then join/weld.
 
 ---
 
 ## Submission Guidelines
 
-- **What to Submit**:
-  - Your `parametric_canopy.py` script and any additional scripts in the `src/` directory.
+**What to Submit**
+  - Your `parametric_canopy.py` script.
   - Your Grasshopper definition file `parametric_canopy.gh`.
-  - Completed `DOCUMENTATION.md` with pseudo-code, explanations, and images.
+  - Completed `README.md` with pseudo-code, explanations, and images.
   - Generated images saved in the `images/` folder.
-  - Any additional documentation or resources in the `docs/` folder.
-
-- **Submission Checklist**:
-  - [ ] Code runs without errors in Grasshopper.
-  - [ ] Code is well-commented and follows best practices.
-  - [ ] `DOCUMENTATION.md` is complete and thorough.
-  - [ ] At least three variations for each category are saved and referenced in your documentation.
-  - [ ] All changes are committed with meaningful messages.
-  - [ ] All commits are pushed to your GitHub repository.
 
 ---
 
 ## Evaluation Criteria
 
-- **Implementation and Functionality**
-  - Correct implementation of the parametric canopy script in Grasshopper Python.
-  - Effective use of depth map control and recursive geometry functions.
-  - Successful combination of surface tessellation strategies.
-  - Generation of the structural system (shell/gridshell and vertical supports).
-
+- **Implementation & Functionality**
+  - Effective and correct use of Rhino.Geometry APIs.
+  - Working canopy pipeline: **Heightmap** → NURBS Surface → **Tessellation** → **Supports**.
 - **Design Exploration**
-  - Variety and creativity in design variations.
-  - Quality and clarity of visualizations.
-
+  - Diversity and quality of variations; clarity of visual communication.
 - **Technical Understanding**
-  - Demonstrated understanding of parametric modeling, recursion, and tessellation.
-  - Clear explanations in code comments and documentation.
-
+  - Sound parameterization; clear pseudo-code and explanations.
 - **Code Quality**
-  - Clean, readable, and well-organized code.
-  - Use of meaningful variable names and proper formatting.
-
+  - Readability, organization, meaningful names, comments.
 - **Documentation**
-  - Detailed pseudo-code and technical explanations.
-  - Inclusion and discussion of generated design variations.
-  - Discussion of challenges and solutions.
-
-- **Use of Git and Version Control**
-  - Regular commits with meaningful messages.
-  - Proper repository structure and organization.
+  - Thorough, reproducible `README.md` with images and parameter tables.
+- **Use of Git**
+  - Regular, meaningful commits; organized repo.
+- **Bonus**
+  - Any Advanced Challenge implementation.
 
 ---
 
 ## Resources
 
-- **Python in Rhino and Grasshopper**
-  - [Rhino.Python Guides](https://developer.rhino3d.com/guides/rhinopython/)
-  - [RhinoScriptSyntax](https://developer.rhino3d.com/api/RhinoScriptSyntax/)
-
-- **Surface Tessellation Techniques**
-  - [Voronoi Diagrams](https://en.wikipedia.org/wiki/Voronoi_diagram)
-  - [Delaunay Triangulation](https://en.wikipedia.org/wiki/Delaunay_triangulation)
-  - [Diagrid Structures](https://en.wikipedia.org/wiki/Diagrid)
+- **Rhino & Grasshopper**
+  - Rhino.Python Guides: https://developer.rhino3d.com/guides/rhinopython/
+  - rhinoscriptsyntax: https://developer.rhino3d.com/api/rhinoscriptsyntax/
+  - RhinoCommon SDK: https://developer.rhino3d.com/api/RhinoCommon/html/N_Rhino_Geometry.htm
+- **Surface Tessellations**
+  - Voronoi Diagrams: https://en.wikipedia.org/wiki/Voronoi_diagram
+  - Delaunay Triangulation: https://en.wikipedia.org/wiki/Delaunay_triangulation
+  - Diagrid: https://en.wikipedia.org/wiki/Diagrid
 
 ---
 
+## Academic Integrity and AI Tool Use
+- You may use AI tools for **boilerplate, refactoring, linting, and debugging**. If you do, you must:
+  1. **Cite** the tools and prompts you used in your `README.md` under a short **AI Acknowledgments** subsection.
+  2. Keep **algorithmic choices** and the **core implementation** your own. Do not submit turnkey solutions.
+  3. Be prepared to **explain any part of your code** (live or written). You may be asked to walk through it.
+- **Prohibited**: uncredited copying from classmates or the internet; submitting code/images you do not understand; using AI to generate the entire assignment without substantive modification.
+
 ## Contact
 
-If you have any questions or need assistance, please reach out to the instructor via email or the course forum.
+If you have any questions or need assistance, please reach out via email or the course forum.
 
 ---
